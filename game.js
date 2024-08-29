@@ -498,12 +498,18 @@ function updateXPBar(xpPercentage, level) {
 }
 
 function mettreAJourStats() {
+
     document.getElementById('player-hp').textContent = `${joueur.pv}/${joueur.pvMax}`;
     document.getElementById('player-pa').textContent = `${joueur.pa}/${joueur.paMax}`;
     document.getElementById('player-pm').textContent = `${joueur.pm}/${joueur.pmMax}`;
     document.getElementById('player-atk').textContent = joueur.attaque;
     updateXPBar(joueur.experience / (joueur.niveau * 100) * 100, joueur.niveau);
     afficherSorts();
+    if (!joueur.estVivant()) {
+        gameOver = true;
+        logMessageInfo(`${joueur.nom} a été vaincu... Game Over!`);
+        gameOverScreen();
+    }
 }
 
 
@@ -599,9 +605,9 @@ function caseOccupee(x, y) {
     return res;
 }
 
-function finDuTourJoueur() {
+async function finDuTourJoueur() {
     joueur.finDuTour();
-    tourDuMonstre();
+    await tourDuMonstre();
     finDuCombat();
     if (gameOver) {
         return;
