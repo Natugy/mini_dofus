@@ -199,8 +199,8 @@ class Sort {
 }
 
 class Soin extends Sort {
-    constructor(lanceur,nom, coutPA, portee, soin, typeCiblage) {
-        super(lanceur,nom, coutPA, portee,typeCiblage);
+    constructor(nom, coutPA, portee, soin, typeCiblage) {
+        super(nom, coutPA, portee,0,typeCiblage,lanceur);
         this.soin = soin;
     }
 
@@ -241,12 +241,15 @@ class GameData {
 
     static map = [];
     
-    static listeMonstres = [ new Monstre("Piou", 20, 5, 2, 9, 9, 1, 40),
-        new Monstre("Gobelin", 50, 10, 2, 9, 9, 1, 60),
-        new Monstre("Squelette", 75, 15, 3, 9, 0, 2, 90),
-        new Monstre("Orc", 100, 20, 5, 9, 0, 2, 100),
-        new Monstre("Troll", 150, 25, 7, 9, 0, 2, 150, true),
-        new Monstre("Dragon", 200, 30, 10, 0, 0, 3, 200, true)];
+    static listeMonstres = [ new Monstre("Piou", 20, 5, 2, 9, 9, 1, 30),
+        new Monstre("Chacha", 30, 7, 3, 9, 9, 1, 50),
+        new Monstre("Bouftou", 50, 10, 2, 9, 9, 1, 75),
+        new Monstre("Chafer", 75, 15, 3, 9, 0, 2, 90),
+        new Monstre("Craqueleur", 100, 20, 5, 9, 0, 2, 100),
+        new Monstre("Bouftou Royal", 150, 25, 7, 9, 0, 1, 150, true),
+        new Monstre("Chuchu", 200, 30, 10, 0, 0, 3, 200, true),
+        new Monstre("Dark Vlad", 250, 35, 15, 0, 0, 3, 250, true),
+        new Monstre("Oropo", 500, 50, 20, 0, 0, 3, 500, true)];
 
     static listeSorts = [
         new Sort("Coup d'épée", 2, 0, 10,TypeCiblage.CROIX),
@@ -255,6 +258,7 @@ class GameData {
         new Sort("Boule de feu", 4, 3, 25,TypeCiblage.CROIX), 
         new Sort("Météore", 6, 4, 40,TypeCiblage.DIAGONALE),
         new Sort("Tornade", 8, 5, 60,TypeCiblage.ZONE),
+        new Soin("Purification", 6, 3, 20, 20,TypeCiblage.ZONE),
         new Sort("Tempête de feu", 8, 6, 50,TypeCiblage.ZONE), 
         new Sort("Annihilastion", 10, 15, 100, TypeCiblage.ZONE),
         new Sort("Pluie de météores", 8, 7, 80,TypeCiblage.ZONE)];
@@ -503,7 +507,7 @@ function creerBoutonSort(sort) {
     const button = document.createElement('button');
     button.className = 'action-button';
     button.innerHTML = sort.icon;
-    button.setAttribute('data-name', sort.nom);
+    button.setAttribute('data-name', `${sort.nom} (${sort.coutPA} PA)`);
     button.onclick = () => activerViseeSort(sort);
     return button;
 }
