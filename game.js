@@ -254,11 +254,11 @@ class GameData {
     static listeSorts = [
         new Sort("Coup d'épée", 2, 0, 10,TypeCiblage.CROIX),
         new Sort("Eclair", 2, 1, 15,TypeCiblage.DIAGONALE),
-        new Soin("Soin", 2, 1, 10, 10,TypeCiblage.ZONE),
+        new Soin("Soin", 2, 1, 10,TypeCiblage.CROIX),
         new Sort("Boule de feu", 4, 3, 25,TypeCiblage.CROIX), 
         new Sort("Météore", 6, 4, 40,TypeCiblage.DIAGONALE),
         new Sort("Tornade", 8, 5, 60,TypeCiblage.ZONE),
-        new Soin("Purification", 6, 3, 20, 20,TypeCiblage.ZONE),
+        new Soin("Purification", 6, 3, 20,TypeCiblage.ZONE),
         new Sort("Tempête de feu", 8, 6, 50,TypeCiblage.ZONE), 
         new Sort("Annihilastion", 10, 15, 100, TypeCiblage.ZONE),
         new Sort("Pluie de météores", 8, 7, 80,TypeCiblage.ZONE)];
