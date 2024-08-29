@@ -148,15 +148,15 @@ class Monstre extends Personnage {
         const dy = Math.sign(joueur.y - this.y);
         
         if (Math.abs(joueur.x - this.x) > Math.abs(joueur.y - this.y)) {
-            if (!GameData.caseOccupee(this.x + dx, this.y)) {
+            if (!GameData.caseOccupee(this.x + dx, this.y) && checkCoordonnees(this.x + dx, this.y)) {
                 this.deplacer(this.x + dx, this.y);
-            } else if (!GameData.caseOccupee(this.x, this.y + dy)) {
+            } else if (!GameData.caseOccupee(this.x, this.y + dy)   && checkCoordonnees(this.x, this.y + dy)) {
                 this.deplacer(this.x, this.y + dy);
             }
         } else {
-            if (!GameData.caseOccupee(this.x, this.y + dy)) {
+            if (!GameData.caseOccupee(this.x, this.y + dy) && checkCoordonnees(this.x, this.y + dy)) {
                 this.deplacer(this.x, this.y + dy);
-            } else if (!GameData.caseOccupee(this.x + dx, this.y)) {
+            } else if (!GameData.caseOccupee(this.x + dx, this.y) && checkCoordonnees(this.x + dx, this.y)) {
                 this.deplacer(this.x + dx, this.y);
             }
         }
@@ -393,12 +393,14 @@ function checkCoordonnees(x,y){
 // Fonctions de visée
 
 function viseeSortCroix(sort){
+    map[joueur.y][joueur.x].classList.add('in-range');
+    map[joueur.y][joueur.x].addEventListener('click', () => lancerSort(sort,joueur.x,joueur.y));
     for (let i = 0; i < mapSize; i++) {
-        if (sort.estAPortee({x: joueur.x, y: i})) {
+        if (sort.estAPortee({x: joueur.x, y: i}) && map[i][joueur.x] !== map[joueur.y][joueur.x]) {
             map[i][joueur.x].classList.add('in-range');
             map[i][joueur.x].addEventListener('click', () => lancerSort(sort,joueur.x,i));
         }
-        if (sort.estAPortee({x: i, y: joueur.y})) {
+        if (sort.estAPortee({x: i, y: joueur.y} )) {
             map[joueur.y][i].classList.add('in-range');
             map[joueur.y][i].addEventListener('click', () => lancerSort(sort,i,joueur.y));
         }
