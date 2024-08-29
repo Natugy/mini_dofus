@@ -555,7 +555,7 @@ function finDuCombat() {
 function gameOverScreen() {
     
         const gameOverScreen = document.getElementById('game-over-screen');
-        gameOverScreen.style.display = 'block';
+        gameOverScreen.style.display = 'flex';
         gameOverScreen.innerHTML = '';
         const gameOverMessage = document.createElement('h2');
         gameOverMessage.textContent = 'Game Over!';
