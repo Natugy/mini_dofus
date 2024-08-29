@@ -296,7 +296,7 @@ let monstresEnJeu = GameData.monstresEnJeu;
 // initialisation du jeu
 function initialiserJeu() {
     joueur = new Joueur("Héros", 100, 10, 5, 4, 4, 1);
-    monstresEnJeu.push(new Monstre("Gobelin", 50, 10, 2, 6, 6, 2, 50));
+    monstresEnJeu.push(new Monstre("Piou", 20, 5, 2, 9, 9, 1, 30));
     creerCarte();
     mettreAJourStats();
     logMessageInfo("Le jeu commence ! Un Gobelin apparaît au coin opposé de la carte !");
