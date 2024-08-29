@@ -340,7 +340,7 @@ function mettreAJourCarte() {
             }
             map[monstre.y][monstre.x].textContent = 'M';
             map[monstre.y][monstre.x].setAttribute('data-name', `${monstre.nom} (${monstre.pv} PV)`);
-            if (!visee ) map[monstre.y][monstre.x].addEventListener('click', () => logMessageInfo(`Monstre: ${monstre.nom} (${monstre.pv} PV)`));
+            if (!visee ) map[monstre.y][monstre.x].addEventListener('click', () => logMessageInfo(`Monstre: ${monstre.nom} (${monstre.pv} / ${monstre.pvMax} PV)`));
         }
     });
     
@@ -512,7 +512,7 @@ function mettreAJourStats() {
     document.getElementById('player-pa').textContent = `${joueur.pa}/${joueur.paMax}`;
     document.getElementById('player-pm').textContent = `${joueur.pm}/${joueur.pmMax}`;
     document.getElementById('player-atk').textContent = joueur.attaque;
-    updateXPBar(joueur.experience / (joueur.niveau * 100) * 100, joueur.niveau);
+    updateXPBar(Math.round(joueur.experience / (joueur.niveau * 100) * 100), joueur.niveau);
     afficherSorts();
     if (!joueur.estVivant()) {
         gameOver = true;
@@ -568,21 +568,18 @@ function finDuCombat() {
 }
 
 function gameOverScreen() {
-    
-        const gameOverScreen = document.getElementById('game-over-screen');
-        gameOverScreen.style.display = 'flex';
-        gameOverScreen.innerHTML = '';
-        const gameOverMessage = document.createElement('h2');
-        gameOverMessage.textContent = 'Game Over!';
-        gameOverScreen.appendChild(gameOverMessage);
-        const newGameButton = document.createElement('button');
-        newGameButton.textContent = 'Nouvelle partie';
-        newGameButton.onclick = () => location.reload();
-        gameOverScreen.appendChild(newGameButton);
-        const gameContainer = document.getElementById('game-container');
-        gameContainer.style.display = 'none';
-
-    
+    const gameOverScreen = document.getElementById('game-over-screen');
+    gameOverScreen.style.display = 'flex';
+    gameOverScreen.innerHTML = '';
+    const gameOverMessage = document.createElement('h2');
+    gameOverMessage.textContent = 'Game Over!';
+    gameOverScreen.appendChild(gameOverMessage);
+    const newGameButton = document.createElement('button');
+    newGameButton.textContent = 'Nouvelle partie';
+    newGameButton.onclick = () => location.reload();
+    gameOverScreen.appendChild(newGameButton);
+    const gameContainer = document.getElementById('game-container');
+    gameContainer.style.display = 'none';
 }
 
 function creationMonstre() {
@@ -590,7 +587,7 @@ function creationMonstre() {
     do {
         newX = Math.floor(Math.random() * mapSize);
         newY = Math.floor(Math.random() * mapSize);
-    } while (newX === joueur.x && newY === joueur.y);
+    } while (caseOccupee(newX, newY));
     monstre = listeMonstres[Math.floor(Math.random() * listeMonstres.length)];
     monstre.x = newX;
     monstre.y = newY;
