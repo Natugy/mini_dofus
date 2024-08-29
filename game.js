@@ -200,7 +200,7 @@ class Sort {
 
 class Soin extends Sort {
     constructor(nom, coutPA, portee, soin, typeCiblage) {
-        super(nom, coutPA, portee,0,typeCiblage,lanceur);
+        super(nom, coutPA, portee,0,typeCiblage);
         this.soin = soin;
     }
 
