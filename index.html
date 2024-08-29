@@ -190,7 +190,7 @@
             font-size: 12px;
             font-weight: bold;
         }
-        @media (max-width: 800px) {
+        @media (max-width: 600px) {
             .stats {
                 justify-content: space-around;
             }
@@ -203,8 +203,8 @@
             }
             #map-container {
                 display: grid;
-                grid-template-columns: repeat(10, 40px);
-                grid-template-rows: repeat(10, 40px);
+                grid-template-columns: repeat(10, 32px);
+                grid-template-rows: repeat(10, 32px);
                 gap: 2px;
             }
             .game-controls {
@@ -212,9 +212,11 @@
                 gap: 20px;
             }
             .cell {
-                width: 40px;
-                height: 40px;
-               
+                width: 32px;
+                height: 32px;
+            }
+            #game-info {
+                max-width: 100%;
             }
         }
 
