@@ -370,7 +370,6 @@ function activerMouvJoueur(){
 }
 
 function checkCoordonnees(x,y){
-    logMessageInfo(x + " " + y);
     return x >= 0 && x < mapSize && y >= 0 && y < mapSize;
 }
 
