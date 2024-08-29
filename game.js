@@ -194,8 +194,8 @@ class Sort {
 }
 
 class Soin extends Sort {
-    constructor(lanceur,nom, coutPA, portee, soin) {
-        super(lanceur,nom, coutPA, portee);
+    constructor(lanceur,nom, coutPA, portee, soin, typeCiblage) {
+        super(lanceur,nom, coutPA, portee,typeCiblage);
         this.soin = soin;
     }
 
@@ -211,8 +211,8 @@ class Soin extends Sort {
 }
 
 class Bouclier extends Sort {
-    constructor(lanceur,nom, coutPA, portee, defense) {
-        super(lanceur,nom, coutPA, portee);
+    constructor(lanceur,nom, coutPA, portee, defense, typeCiblage) {
+        super(lanceur,nom, coutPA, portee,typeCiblage);
         this.defense = defense;
     }
 
@@ -242,15 +242,16 @@ class GameData {
         new Monstre("Troll", 150, 25, 7, 9, 0, 2, 150, true),
         new Monstre("Dragon", 200, 30, 10, 0, 0, 3, 200, true)];
 
-    static listeSorts = [new Sort("Annihilastion", 2, 15, 1000, TypeCiblage.ZONE),
-        new Sort("Eclair", 2, 1, 10,TypeCiblage.DIAGONALE),
+    static listeSorts = [ new Sort("Coup d'épée", 2, 1, 10,TypeCiblage.CROIX),
+        new Sort("Eclair", 2, 2, 10,TypeCiblage.DIAGONALE),
         new Soin("Soin", 2, 1, 10, 10,TypeCiblage.ZONE),
         new Bouclier("Bouclier", 2, 1, 10, 5,TypeCiblage.ZONE),
         new Sort("Boule de feu", 4, 3, 20,TypeCiblage.CROIX), 
-        new Sort("Météore", 6, 4, 30,TypeCiblage.ZONE),
+        new Sort("Météore", 6, 4, 30,TypeCiblage.DIAGONALE),
         new Sort("Tornade", 8, 5, 40,TypeCiblage.ZONE),
-        new Sort("Tempête de feu", 10, 6, 50,TypeCiblage.ZONE), 
-        new Sort("Pluie de météores", 12, 7, 60,TypeCiblage.ZONE)];
+        new Sort("Tempête de feu", 8, 6, 50,TypeCiblage.ZONE), 
+        new Sort("Annihilastion", 10, 15, 1000, TypeCiblage.ZONE),
+        new Sort("Pluie de météores", 10, 7, 60,TypeCiblage.ZONE)];
 
     
     static monstresEnJeu = [];
