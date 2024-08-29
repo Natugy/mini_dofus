@@ -95,7 +95,7 @@ class Joueur extends Personnage {
         this.niveau++;
         this.pvMax += 10;
         this.pv = this.pvMax;
-        this.attaque += 2;
+        this.attaque += 4;
         this.defense += 1;
         this.experience = Math.max(this.experience-this.niveau * 100,0);
         
@@ -598,7 +598,7 @@ function creationMonstre() {
         newX = Math.floor(Math.random() * mapSize);
         newY = Math.floor(Math.random() * mapSize);
     } while (caseOccupee(newX, newY));
-    let newMonstre = Object.assign(new Monstre(), listeMonstres[Math.floor(Math.random() * listeMonstres.length)]);
+    let newMonstre = Object.assign(new Monstre(), listeMonstres[Math.floor(Math.random() * (Math.min(Math.floor(tour/3),listeMonstres.length)))]);
     
     newMonstre.x = newX;
     newMonstre.y = newY;
