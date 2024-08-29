@@ -299,7 +299,7 @@ function initialiserJeu() {
     monstresEnJeu.push(new Monstre("Piou", 20, 5, 2, 9, 9, 1, 30));
     creerCarte();
     mettreAJourStats();
-    logMessageInfo("Le jeu commence ! Un Gobelin apparaît au coin opposé de la carte !");
+    logMessageInfo("Le jeu commence ! C'est à votre tour.");
 }
 
 function wait(ms) {
