@@ -143,7 +143,6 @@ class Monstre extends Personnage {
     deplacerVersJoueur() {
         const dx = Math.sign(joueur.x - this.x);
         const dy = Math.sign(joueur.y - this.y);
-        console.log(dx,dy);
         
         if (Math.abs(joueur.x - this.x) > Math.abs(joueur.y - this.y)) {
             if (!GameData.caseOccupee(this.x + dx, this.y)) {
@@ -236,13 +235,14 @@ class GameData {
 
     static map = [];
     
-    static listeMonstres = [new Monstre("Gobelin", 50, 10, 2, 9, 9, 2, 1000),
-        new Monstre("Squelette", 75, 15, 3, 9, 0, 2, 75),
+    static listeMonstres = [ new Monstre("Piou", 20, 5, 2, 9, 9, 1, 40),
+        new Monstre("Gobelin", 50, 10, 2, 9, 9, 1, 60),
+        new Monstre("Squelette", 75, 15, 3, 9, 0, 2, 90),
         new Monstre("Orc", 100, 20, 5, 9, 0, 2, 100),
         new Monstre("Troll", 150, 25, 7, 9, 0, 2, 150, true),
         new Monstre("Dragon", 200, 30, 10, 0, 0, 3, 200, true)];
 
-    static listeSorts = [ new Sort("Coup d'épée", 2, 1, 10,TypeCiblage.CROIX),
+    static listeSorts = [new Sort("Coup d'épée", 2, 1, 10,TypeCiblage.CROIX),
         new Sort("Eclair", 2, 2, 10,TypeCiblage.DIAGONALE),
         new Soin("Soin", 2, 1, 10, 10,TypeCiblage.ZONE),
         new Bouclier("Bouclier", 2, 1, 10, 5,TypeCiblage.ZONE),
@@ -503,7 +503,7 @@ function mettreAJourStats() {
     document.getElementById('player-hp').textContent = `${joueur.pv}/${joueur.pvMax}`;
     document.getElementById('player-pa').textContent = `${joueur.pa}/${joueur.paMax}`;
     document.getElementById('player-pm').textContent = `${joueur.pm}/${joueur.pmMax}`;
-    document.getElementById('player-def').textContent = joueur.defense;
+    document.getElementById('player-atk').textContent = joueur.attaque;
     updateXPBar(joueur.experience / (joueur.niveau * 100) * 100, joueur.niveau);
     afficherSorts();
 }
@@ -548,7 +548,6 @@ function finDuCombat() {
     mettreAJourCarte();
     mettreAJourStats();
     if (monstresEnJeu.length === 0) {
-        creationMonstre();
         creationMonstre();
     }
 }
@@ -612,7 +611,7 @@ function finDuTourJoueur() {
     }
     mettreAJourStats();
     mettreAJourCarte();
-    console.log("fin du tour du monstre");
+    
     tour++;
 }
 
