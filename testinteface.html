@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interface de Jeu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1F2937;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        .game-interface {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .action-log {
+            background-color: black;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .green { color: #10B981; }
+        .red { color: #EF4444; }
+        .yellow { color: #F59E0B; }
+        .game-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .stats {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .stat-row {
+            display: flex;
+            gap: 20px;
+        }
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            position: relative;
+        }
+        .stat:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4B5563;
+            color: white;
+            padding: 5px;
+            border-radius: 3px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 0 20px;
+        }
+        .action-row {
+            display: flex;
+            gap: 10px;
+        }
+        .action-button {
+            width: 32px;
+            height: 32px;
+            background-color: #D97706;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .action-button:hover {
+            background-color: #F59E0B;
+        }
+        .action-button::after {
+            content: attr(data-name);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4B5563;
+            color: white;
+            padding: 5px;
+            border-radius: 3px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .action-button:hover::after {
+            opacity: 1;
+        }
+        .end-turn {
+            background-color: #10B981;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .xp-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #4B5563;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+            position: relative;
+        }
+        .xp-progress {
+            width: 75%; /* Exemple : 75% de progression */
+            height: 100%;
+            background-color: #60A5FA;
+            transition: width 0.5s ease-in-out;
+        }
+        .xp-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-interface">
+        <div class="action-log">
+            <p class="green">Lieutenant Trenne lance Digon.</p>
+            <p class="red">Cinas-Flo : -236 PV.</p>
+            <p class="yellow">Cinas-Flo : Augmente les dommages finaux occasionnés de 1% (1 tour)</p>
+        </div>
+        
+        <div class="game-controls">
+            <div class="stats">
+                <div class="stat-row">
+                    <div class="stat" data-tooltip="PV">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="red"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        <span class="red">3859</span>
+                    </div>
+                    <div class="stat">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="blue"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        <span style="color: #3B82F6;">4072</span>
+                    </div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #60A5FA;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <span style="color: #60A5FA;">6</span>
+                    </div>
+                    <div class="stat">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #34D399;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+                        <span style="color: #34D399;">3</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <div class="action-row" id="actionRow1"></div>
+                <div class="action-row" id="actionRow2"></div>
+            </div>
+            
+            <button class="end-turn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                TERMINER LE TOUR
+            </button>
+        </div>
+
+        <div class="xp-bar">
+            <div class="xp-progress"></div>
+            <div class="xp-text">75% - Niveau 5</div>
+        </div>
+    </div>
+
+    <script>
+        const actions = [
+            { name: 'Attaque', icon: '⚔️' },
+            { name: 'Sort', icon: '🔮' },
+            { name: 'Potion', icon: '🧪' },
+            { name: 'Viser', icon: '🎯' },
+            // Ajoutez d'autres actions ici
+        ];
+
+        function createActionButton(action) {
+            const button = document.createElement('button');
+            button.className = 'action-button';
+            button.innerHTML = action.icon;
+            button.setAttribute('data-name', action.name);
+            button.onclick = () => console.log(`Action ${action.name} cliquée`);
+            return button;
+        }
+
+        const actionRow1 = document.getElementById('actionRow1');
+        const actionRow2 = document.getElementById('actionRow2');
+
+        actions.forEach((action, index) => {
+            const button = createActionButton(action);
+            if (index < 10) {
+                actionRow1.appendChild(button);
+            } else if (index < 20) {
+                actionRow2.appendChild(button);
+            }
+        });
+
+        // Fonction pour mettre à jour la barre d'expérience
+        function updateXPBar(xpPercentage, level) {
+            const xpProgress = document.querySelector('.xp-progress');
+            const xpText = document.querySelector('.xp-text');
+            xpProgress.style.width = `${xpPercentage}%`;
+            xpText.textContent = `${xpPercentage}% - Niveau ${level}`;
+        }
+
+        // Exemple d'utilisation : updateXPBar(75, 5);
+    </script>
+</body>
+</html>
