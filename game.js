@@ -598,7 +598,7 @@ function creationMonstre() {
         newX = Math.floor(Math.random() * mapSize);
         newY = Math.floor(Math.random() * mapSize);
     } while (caseOccupee(newX, newY));
-    let newMonstre = Object.assign(new Monstre(), listeMonstres[Math.floor(Math.random() * (Math.min(Math.floor(tour/3),listeMonstres.length)))]);
+    let newMonstre = Object.assign(new Monstre(), listeMonstres[Math.floor(Math.random() * (Math.min(Math.floor(tour/3)+1,listeMonstres.length)))]);
     
     newMonstre.x = newX;
     newMonstre.y = newY;
