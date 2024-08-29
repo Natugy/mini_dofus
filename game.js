@@ -410,7 +410,7 @@ function viseeSortCroix(sort){
 
 
 function viseeSortDiagonale(sort){
-    for (let i = 0; i < mapSize; i++) {
+    for (let i = 1; i < mapSize; i++) {
         if (checkCoordonnees( joueur.x + i, joueur.y + i)  && sort.estAPortee({x: joueur.x + i, y: joueur.y + i})) {
             map[joueur.y + i][joueur.x + i].classList.add('in-range');
             map[joueur.y + i][joueur.x + i].addEventListener('click', () => lancerSort(sort,joueur.x + i,joueur.y + i));
@@ -593,16 +593,18 @@ function gameOverScreen() {
 
 function creationMonstre() {
     let newX, newY;
+    
     do {
         newX = Math.floor(Math.random() * mapSize);
         newY = Math.floor(Math.random() * mapSize);
     } while (caseOccupee(newX, newY));
-    monstre = listeMonstres[Math.floor(Math.random() * listeMonstres.length)];
-    monstre.x = newX;
-    monstre.y = newY;
-    monstre.resetStats();
-    monstresEnJeu.push(monstre);
-    logMessageInfo(`${monstre.nom} apparaît en (${monstre.x}, ${monstre.y})!`);
+    let newMonstre = Object.assign(new Monstre(), listeMonstres[Math.floor(Math.random() * listeMonstres.length)]);
+    
+    newMonstre.x = newX;
+    newMonstre.y = newY;
+    newMonstre.resetStats();
+    monstresEnJeu.push(newMonstre);
+    logMessageInfo(`${newMonstre.nom} apparaît en (${newMonstre.x}, ${newMonstre.y})!`);
     mettreAJourCarte();
     mettreAJourStats();
 }
