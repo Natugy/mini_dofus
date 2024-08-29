@@ -275,6 +275,7 @@ let tour = 1;
 let visee = false;
 let gameOver = false;
 let peutInteragir = true;
+let mouvJoueurActif = false;
 const mapSize = 10;
 const map = GameData.map;
 const listeMonstres = GameData.listeMonstres;
@@ -357,8 +358,7 @@ function deplacerJoueur(x, y) {
     } 
 }
 
-
-function activerMouvJoueur(){
+function afficherDeplacements() {
     for (let y = 0; y < mapSize; y++) {
         for (let x = 0; x < mapSize; x++) {
             if (joueur.estAPorteeDeplacement({x, y})) {
@@ -367,6 +367,15 @@ function activerMouvJoueur(){
             }
         }
     }
+}
+
+function activerMouvJoueur(){
+    mouvJoueurActif = !mouvJoueurActif;
+    mettreAJourCarte();
+    if(mouvJoueurActif){
+        afficherDeplacements();
+    }
+    
 }
 
 function checkCoordonnees(x,y){
@@ -621,21 +630,6 @@ async function finDuTourJoueur() {
     tour++;
 }
 
-function desactiverActions() {
-    const actionButtons = document.querySelectorAll('.action-button');
-    actionButtons.forEach(button => {
-        button.onclick = null;
-    });
-    peutInteragir = false;
-}
-
-function activerActions() {
-    const actionButtons = document.querySelectorAll('.action-button');
-    actionButtons.forEach((button, index) => {
-        button.onclick = () => activerViseeSort(joueur.sorts[index]);
-    });
-    peutInteragir = true;
-}
 
 function tourDuMonstre() {
     monstresEnJeu.forEach(monstre => {
@@ -646,8 +640,6 @@ function tourDuMonstre() {
             }
         }
     });
-    
-    
 }
 
 // Initialisation du jeu
