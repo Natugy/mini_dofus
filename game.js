@@ -100,10 +100,13 @@ class Joueur extends Personnage {
         this.experience = Math.max(this.experience-this.niveau * 100,0);
         
         if (this.niveau % 3 === 0) {
-            this.pmMax++;
+            this.paMax++;
         }
         if (this.niveau % 5 === 0) {
-            this.paMax++;
+            this.pmMax++;
+        }
+        if (this.niveau % 7 === 0) {
+            this.porteeAttaque++;
         }
         if (this.niveau <= listeSorts.length) this.ajoutSort(listeSorts[this.niveau - 1]);
         logMessageInfo(`${this.nom} passe au niveau ${this.niveau}!`);
@@ -173,7 +176,10 @@ class Sort {
 
     estAPortee(cible) {
         const distance = Math.abs(this.lanceur.x - cible.x) + Math.abs(this.lanceur.y - cible.y);
-        return distance <= this.portee;
+        if (this.typeCiblage === TypeCiblage.DIAGONALE) {
+            return distance <= (this.portee+this.lanceur.porteeAttaque)*2;
+        }
+        return distance <= this.portee+this.lanceur.porteeAttaque;
     }
 
     lancerSort(cible) {
@@ -242,8 +248,9 @@ class GameData {
         new Monstre("Troll", 150, 25, 7, 9, 0, 2, 150, true),
         new Monstre("Dragon", 200, 30, 10, 0, 0, 3, 200, true)];
 
-    static listeSorts = [new Sort("Coup d'épée", 2, 1, 10,TypeCiblage.CROIX),
-        new Sort("Eclair", 2, 2, 15,TypeCiblage.DIAGONALE),
+    static listeSorts = [
+        new Sort("Coup d'épée", 2, 0, 10,TypeCiblage.CROIX),
+        new Sort("Eclair", 2, 1, 15,TypeCiblage.DIAGONALE),
         new Soin("Soin", 2, 1, 10, 10,TypeCiblage.ZONE),
         new Sort("Boule de feu", 4, 3, 25,TypeCiblage.CROIX), 
         new Sort("Météore", 6, 4, 40,TypeCiblage.DIAGONALE),
@@ -284,7 +291,7 @@ let monstresEnJeu = GameData.monstresEnJeu;
 
 // initialisation du jeu
 function initialiserJeu() {
-    joueur = new Joueur("Héros", 100, 10, 5, 4, 4, 3);
+    joueur = new Joueur("Héros", 100, 10, 5, 4, 4, 1);
     monstresEnJeu.push(new Monstre("Gobelin", 50, 10, 2, 6, 6, 2, 50));
     creerCarte();
     mettreAJourStats();
