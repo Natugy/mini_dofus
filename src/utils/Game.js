@@ -158,7 +158,7 @@ export class Game {
         this.map[this.joueur.y][this.joueur.x].afficherPorteeSort();
         this.map[this.joueur.y][this.joueur.x].addEventListener('click', () => this.lancerSort(sort,this.joueur.x,this.joueur.y));
         for (let i = 0; i < this.mapSize; i++) {
-            if(i !== this.joueur.x || i !== this.joueur.y){
+            if(i !== this.joueur.x && i !== this.joueur.y){
                 if (sort.estAPortee({x: this.joueur.x, y: i}) ) {
                     this.map[i][this.joueur.x].afficherPorteeSort();
                     this.map[i][this.joueur.x].addEventListener('click', () => this.lancerSort(sort,this.joueur.x,i));
