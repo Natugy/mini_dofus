@@ -23,7 +23,6 @@ export class Game {
 
     initialiserGame() {
         this.joueur.ajoutSort(GameData.listeSorts[0]);
-        this.joueur.ajoutSort(GameData.listeSorts[2]);
         this.monstresEnJeu.push(Object.assign(new Monstre(), GameData.listeMonstres[0]));
         this.resetCarte();
         LogMessage.logMessageInfo("Bienvenue dans le jeu!");
