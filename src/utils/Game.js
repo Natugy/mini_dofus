@@ -121,8 +121,6 @@ export class Game {
 
     afficherAttaque(sort) {
         this.viseeSortActif = !this.viseeSortActif;
-        this.resetCarte();
-        this.mettreAJourInterface();
         if(this.viseeSortActif === true && this.desactiverInterface === false){
             if(sort.typeCiblage === TypeCiblage.CROIX){
                 this.viseeSortCroix(sort);
@@ -157,12 +155,16 @@ export class Game {
         this.map[this.joueur.y][this.joueur.x].afficherPorteeSort();
         this.map[this.joueur.y][this.joueur.x].addEventListener('click', () => this.lancerSort(sort,this.joueur.x,this.joueur.y));
         for (let i = 0; i < this.mapSize; i++) {
-            if(i !== this.joueur.x && i !== this.joueur.y){
+            if(i !== this.joueur.x || i !== this.joueur.y){
                 if (sort.estAPortee({x: this.joueur.x, y: i}) ) {
+                    console.log(this.map[i][this.joueur.x]);
+                    
                     this.map[i][this.joueur.x].afficherPorteeSort();
                     this.map[i][this.joueur.x].addEventListener('click', () => this.lancerSort(sort,this.joueur.x,i));
                 }
                 if (sort.estAPortee({x: i, y: this.joueur.y} )) {
+                    console.log(this.map[this.joueur.y][i]);
+                    
                     this.map[this.joueur.y][i].afficherPorteeSort();
                     this.map[this.joueur.y][i].addEventListener('click', () => this.lancerSort(sort,i,this.joueur.y));
                 }
