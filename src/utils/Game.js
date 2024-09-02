@@ -8,6 +8,7 @@ import { XpBar } from '../affichage/XpBar.js';
 import { SortList } from '../affichage/SortList.js';
 import { TypeCiblage } from '../enum/TypeCiblage.js';
 import { GameOver } from '../affichage/GameOver.js';
+import { Poison } from '../sorts/effet/Poison.js';
 
 export class Game {
     constructor() {
@@ -77,7 +78,9 @@ export class Game {
     }
 
     afficherInfosEnnemi(ennemi) {
-        LogMessage.logMessageInfo(`Nom: ${ennemi.nom} PV: ${ennemi.pv} Attaque: ${ennemi.attaque} Defense: ${ennemi.defense}`);
+        console.log(ennemi);
+        
+        LogMessage.logMessageInfo(`Nom: ${ennemi.nom} PV: ${ennemi.pv} Attaque: ${ennemi.attaque} Defense: ${ennemi.defense} PA : ${ennemi.pa}`);
     }
 
     // Gestion des déplacements
@@ -121,6 +124,8 @@ export class Game {
 
     afficherAttaque(sort) {
         this.viseeSortActif = !this.viseeSortActif;
+        this.resetCarte()
+        this.mettreAJourInterface()
         if(this.viseeSortActif === true && this.desactiverInterface === false){
             if(sort.typeCiblage === TypeCiblage.CROIX){
                 this.viseeSortCroix(sort);
@@ -140,6 +145,7 @@ export class Game {
     }
 
     lancerSort(sort, x, y) {
+        
         const cible = this.map[y][x].contenu;
         if (cible != null) {
             sort.lancerSort(cible);
@@ -176,6 +182,7 @@ export class Game {
     }
 
     viseeSortDiagonale(sort){
+        
         const joueur = this.joueur;
         for (let i = 1; i < this.mapSize; i++) {
             if (this.checkCoordonnees( joueur.x + i, joueur.y + i)  && sort.estAPortee({x: joueur.x + i, y: joueur.y + i})) {
@@ -235,17 +242,27 @@ export class Game {
 
     tourDuMonstre() {
         this.monstresEnJeu.forEach(async monstre => {
-            while(monstre.jouerTour()){
+            monstre.debutTour();
+            if(!monstre.estVivant()){
+                this.checkAction()
                 this.resetCarte();
                 this.mettreAJourInterface();
-                await this.wait(200);
             }
-            monstre.finDuTour();
-            if (!this.joueur.estVivant()) {
-                GameOver.afficherGameOver();
+            else {
+                while(monstre.jouerTour()){
+                    this.resetCarte();
+                    this.mettreAJourInterface();
+                    await this.wait(200);
+                }
+                monstre.finDuTour();
+                if (!this.joueur.estVivant()) {
+                    GameOver.afficherGameOver();
+                    return;
+                }
             }
         });
-        
+        this.checkAction()
+        this.joueur.debutTour();
     }
 
     wait(ms) {
