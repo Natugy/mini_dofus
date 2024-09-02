@@ -3,6 +3,8 @@ import { Monstre } from '../perso/Monstre.js';
 import { Sort } from '../sorts/Sort.js';
 import { Soin } from '../sorts/Soin.js';
 import { TypeCiblage } from '../enum/TypeCiblage.js';
+import { EffetEnum } from '../enum/EffetEnum.js';
+import { EffetFactory } from '../factory/EffetFactory.js';
 export class GameData {
     static tour = 1;
     static map = [];
@@ -18,16 +20,16 @@ export class GameData {
         new Monstre("Oropo", 500, 50, 20, 0, 0, 3, 500, true)];
 
     static listeSorts = [
-        new Sort("Coup d'épée", 2, 0, 10,TypeCiblage.CROIX),
-        new Sort("Eclair", 2, 0, 15,TypeCiblage.DIAGONALE),
-        new Soin("Soin", 3, 0, 10,TypeCiblage.CROIX),
-        new Sort("Boule de feu", 4, 2, 25,TypeCiblage.CROIX), 
-        new Sort("Météore", 5, 3, 40,TypeCiblage.DIAGONALE),
-        new Sort("Tornade", 8, 5, 60,TypeCiblage.ZONE),
-        new Soin("Purification", 6, 2, 20,TypeCiblage.ZONE),
-        new Sort("Tempête de feu", 8, 6, 50,TypeCiblage.ZONE), 
-        new Sort("Annihilastion", 10, 15, 100, TypeCiblage.ZONE),
-        new Sort("Pluie de météores", 8, 7, 80,TypeCiblage.ZONE)];
+        new Sort("Coup d'épée", 2, 0, 10,null,TypeCiblage.CROIX),
+        new Sort("Eclair", 2, 0, 15,null,TypeCiblage.DIAGONALE),
+        new Soin("Soin", 3, 0, 10,null,TypeCiblage.CROIX),
+        new Sort("Fleche de poison", 4, 2, 25,EffetFactory.getEffet(EffetEnum.POISON),TypeCiblage.CROIX), 
+        new Sort("Météore", 5, 3, 40,null,TypeCiblage.DIAGONALE),
+        new Sort("Tornade", 8, 5, 60,null,TypeCiblage.ZONE),
+        new Soin("Purification", 6, 2, 20,null,TypeCiblage.ZONE),
+        new Sort("Tempête de feu", 8, 6, 50,null,TypeCiblage.ZONE), 
+        new Sort("Annihilastion", 10, 15, 100,null, TypeCiblage.ZONE),
+        new Sort("Pluie de météores", 8, 7, 80,null,TypeCiblage.ZONE)];
 
     static mapSize = 10;
     static monstresEnjeu = [];

@@ -12,9 +12,11 @@ export class BoutonSort {
     }
 
     resetBouton() {
+        let info = `${this.sort.nom} (${this.sort.coutPA} PA) `;
+        if(this.sort.effet !==null) info += `Effet : ${this.sort.effet.nom}`
         this.htmlElement = document.createElement('button');
         this.htmlElement.className = 'action-button';
         this.htmlElement.innerHTML = this.sort.icon;
-        this.htmlElement.setAttribute('data-name', `${this.sort.nom} (${this.sort.coutPA} PA)`);
+        this.htmlElement.setAttribute('data-name', info);
     }
 }

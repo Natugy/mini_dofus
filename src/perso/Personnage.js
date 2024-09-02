@@ -14,6 +14,7 @@ export class Personnage {
         this.pmMax = pm;
         this.pa = pa;
         this.paMax = pa;
+        this.effetActifs =[];
     }
 
     attaquer(cible) {
@@ -44,6 +45,24 @@ export class Personnage {
         }
     }
 
+    debutTour(){
+        this.effetActifs.forEach(effet => {
+            effet.appliqueEffet(this);
+        });
+        this.effetActifs=this.effetActifs.filter(effet => effet.estActif())
+    }
+
+    recoitEffet(effet){
+        if(effet!=null && !this.possedeEffet(effet)) {
+            this.effetActifs.push(effet);
+            LogMessage.logMessageInfo(`${this.nom} a reçu l'effet ${effet.nom}`)
+        };
+    }
+
+    possedeEffet(newEffet){
+        const tab =this.effetActifs.filter(effet => effet.nom ===newEffet.nom);
+        return tab.length > 0
+    }
     finDuTour() {
         this.pa = this.paMax;
         this.pm = this.pmMax;

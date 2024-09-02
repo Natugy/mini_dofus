@@ -46,12 +46,6 @@ export class Cellule {
     }
 
     estLibre(){
-        if(this.htmlElement.classList.contains('player')){
-            return false;
-        }
-        if(this.htmlElement.classList.contains('monster')){
-            return false;
-        }
-        return true;
+        return this.contenu===null;
     }
 }

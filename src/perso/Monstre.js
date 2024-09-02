@@ -4,27 +4,28 @@ import { GameData } from "../utils/GameData";
 import { Carte } from "../affichage/Carte";
 import { Stats } from "../affichage/Stats";
 import { GameOver } from "../affichage/GameOver";
+import { TypeCiblage } from "../enum/TypeCiblage";
 export class Monstre extends Personnage {
     constructor(nom, pv, attaque, defense, x, y, porteeAttaque, experienceDonnee,boss=false) {
         super(nom, pv, attaque, defense, x, y, porteeAttaque,3,3);
         this.experienceDonnee = experienceDonnee;
-        this.sort = new Sort("Coup de griffe", 2, 1, 10,this);
+        this.sort = new Sort("Coup de griffe", 2, 1, 10,null,TypeCiblage.ZONE,this);
         this.boss = boss;
     }
 
     jouerTour() {
         const joueur = GameData.joueur;
+        this.sort.lanceur = this
         if (this.pa > 0) {
             if(this.pm>0  && !this.estAPorteeAttaque(joueur)){
                 this.deplacerVersJoueur();
                 return true;
             }
-            else if (this.estAPorteeAttaque(joueur)) {
-                
-                this.attaquer(joueur);
-                this.pa-=2;
+            else if (this.estAPorteeAttaque(joueur) && this.sort.peutLancerSort()) {
+                this.sort.lancerSort(joueur);
                 return true;
             }
+            return false;
         }
         return false;
     }
@@ -47,7 +48,9 @@ export class Monstre extends Personnage {
                 
             } else if (this.checkCoordonnees(this.x + dx, this.y)&&map[this.y][this.x + dx].estLibre() ) {
                 this.deplacer(this.x + dx, this.y);
-                
+            }
+            else {
+                this.pm--
             }
         }
     }
