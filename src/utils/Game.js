@@ -152,21 +152,13 @@ export class Game {
 
 
     viseeSortCroix(sort){
-        this.map[this.joueur.y][this.joueur.x].afficherPorteeSort();
-        this.map[this.joueur.y][this.joueur.x].addEventListener('click', () => this.lancerSort(sort,this.joueur.x,this.joueur.y));
         for (let i = 0; i < this.mapSize; i++) {
-            if(i !== this.joueur.x || i !== this.joueur.y){
-                if (sort.estAPortee({x: this.joueur.x, y: i}) ) {
-                    console.log(this.map[i][this.joueur.x]);
-                    
-                    this.map[i][this.joueur.x].afficherPorteeSort();
-                    this.map[i][this.joueur.x].addEventListener('click', () => this.lancerSort(sort,this.joueur.x,i));
-                }
-                if (sort.estAPortee({x: i, y: this.joueur.y} )) {
-                    console.log(this.map[this.joueur.y][i]);
-                    
-                    this.map[this.joueur.y][i].afficherPorteeSort();
-                    this.map[this.joueur.y][i].addEventListener('click', () => this.lancerSort(sort,i,this.joueur.y));
+            for (let j = 0; j < this.mapSize; j++) {
+                if (i === this.joueur.x || j === this.joueur.y) {
+                    if (sort.estAPortee({x: i, y: j})) {
+                        this.map[j][i].afficherPorteeSort();
+                        this.map[j][i].addEventListener('click', () => this.lancerSort(sort,i,j));
+                    }
                 }
             }
         }
