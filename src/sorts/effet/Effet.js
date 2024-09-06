@@ -1,15 +1,15 @@
 export class Effet {
-    constructor(puissance,duree) {
-        this.puissance = puissance;
-        this.duree = duree;
-        this.nom = "Effet"
-        
-    }
+	constructor(puissance, duree) {
+		this.puissance = puissance;
+		this.duree = duree;
+		this.nom = 'Effet';
+	}
 
-    appliqueEffet(cible){
-    }
+	appliqueEffet(cible) {
+		this.duree--;
+	}
 
-    estActif(){
-        return this.duree >0;
-    }
+	estActif() {
+		return this.duree > 0;
+	}
 }
